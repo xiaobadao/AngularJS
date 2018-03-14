@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>货币转换</title>
+    <script src="../angular-1.6.9/angular.min.js"></script>
+    <script type="text/javascript" src="../js/Currency.js"></script>
+</head>
+<body ng-app="invoice1">
+    <div ng-controller="InvoiceController as invoice">
+        <b>订单：</b>
+        <div>
+            数量:<input type="number" ng-model="invoice.qty" required>
+        </div>
+        <div>
+            单价:<input type="number" ng-model="invoice.cost" required>
+            <select ng-model="invoice.inCurr">
+                <option ng-repeat=" c in invoice.currecies">{{c}}</option>
+
+            </select>
+        </div>
+        <div>
+            <b>总价：</b>
+
+            <span ng-repeat="c in invoice.currecies">
+                {{c+invoice.total}}
+            </span>
+            <br>
+            <button class="btn" ng-click="invoice.pay()">支付</button>
+        </div>
+    </div>
+</body>
+</html>
