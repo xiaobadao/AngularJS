@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="controllers-App">
+<head>
+    <meta charset="UTF-8">
+    <title>Controllers</title>
+    <link rel="stylesheet" href="../bootstrap-3.0.3/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../bootstrap-3.0.3/dist/css/bootstrap-theme.css">
+    <script type="text/javascript" src="../angular-1.2.5/angular.js"></script>
+    <script>
+        angular.module("controllers-App",[])
+            .controller("defaultController",function ($scope) {
+                $scope.cities = ["London","New York","Paris"];
+                $scope.city = "London";
+                $scope.getCountry = function (city) {
+                    switch (city){
+                        case"London":
+                            return"UK";
+                        case"New York":
+                            return"USA";
+                    }
+                }
+            });
+
+    </script>
+</head>
+<body>
+    <div class="well" ng-controller="defaultController">
+        <p>The city is: {{city}}</p>
+        <p>the county is: {{getCountry(city) || "Unknown"}}</p>
+        <label>select a city:</label>
+        <select ng-options=
+                        "city
+                        for
+        city in cities" ng-model="city">
+
+        </select>
+    </div>
+</body>
+</html>

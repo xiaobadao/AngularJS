@@ -8,16 +8,17 @@
     <link href="../../bootstrap-3.0.3/dist/css/bootstrap-theme.css" rel="stylesheet">
 
     <script>
-        angular.module("sportsStore",["customFilters"]);
+        angular.module("sportsStore",["customFilters","cart"]);
     </script>
     <script src="../controllers/sportStore.js"></script>
     <script src="../filters/customFilters.js"></script>
     <script src="../controllers/productListControllers.js"></script>
-
+    <script src="../components/cart/cart.js"></script>
 </head>
 <body ng-controller="sportsStoreCtrl">
     <div class="navbar navbar-inverse">
         <a class="navbar-brand" href="#">SPORTS STORE</a>
+        <cart-summary></cart-summary>
     </div>
     <div class="panel panel-default row" ng-controller="productListCtrl">
         <div class="col-xs-3">
@@ -49,6 +50,6 @@
             </div>
         </div>
     </div>
-
+    <ng-include src="../views/productList.html"></ng-include>
 </body>
 </html>

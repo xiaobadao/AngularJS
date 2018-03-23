@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="App">
+<head>
+    <meta charset="UTF-8">
+    <title>Directive</title>
+    <link rel="stylesheet" href="../bootstrap-3.0.3/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../bootstrap-3.0.3/dist/css/bootstrap-theme.css">
+    <script type="text/javascript" src="../angular-1.2.5/angular.js"></script>
+    <script type="text/javascript">
+
+      var  directApp = angular.module("App",[])
+
+      directApp.controller("defaultCtrl",function ($scope ,$location) {
+
+          $scope.message = "Tap Me!";
+                $scope.items = [
+                    {action:"get gorocerices1",complete:false},
+                    {action:"get gorocerices2",complete:false},
+                    {action:"get gorocerices3",complete:true},
+                    {action:"get gorocerices4",complete:true}
+                ];
+                $scope.buttonNames = ["Red","Green","Blue"];
+                $scope.settings={
+                  Rows:"Red",
+                  Columns:"Green"
+                };
+
+                $scope.data = {
+                    rowColor:"Blue",
+                    columncolor:"Green"
+                };
+                $scope.handleEven=function (e) {
+                  console.log("even type"+e.type());
+                  $scope.data.columncolor = e.type()=="mouseover"?"Green":"Blue";
+                };
+            });
+      directApp.directive("tap",function () {
+          return function (scope,element,attrs) {
+              element.on("touchstart touchend",function () {
+                  scope.$apply(attrs["tap"]);
+              })
+          }
+      })
+    </script>
+    <style>
+        tr.Red{background-color: lightcoral;}
+        tr.Green{background-color: lightgreen;}
+        tr.Blue{background-color: lightblue;}
+    </style>
+    <style>
+        .odd{background-color: #b3d7ff}
+        .even{background-color: #2aabd2}
+    </style>
+    <style>
+        td >*:first-child {font-weight: bold}
+    </style>
+</head>
+<body>
+<div id="todoPanel" class="panel" ng-controller="defaultCtrl">
+    <h3 class="panel-heading">To Do List</h3>
+    <div class="well" tap="message = 'Tapped!'">
+        {{message}}
+    </div>
+    <div class="well">
+        <span ng-repeat="button in buttonNames">
+            <button class="btn btn-info" ng-click="data.rowColor=button">
+                {{button}}
+            </button>
+        </span>
+    </div>
+    <div class="row well">
+        <div class="col-xs-6" ng-repeat="(key,val) in settings">
+            <h4>{{key}}</h4>
+            <div class="radio" ng-repeat="button in buttonNames">
+                <label>
+                    <input type="radio" ng-model="settings[key]" value="{{button}}">
+                    {{button}}
+                </label>
+
+            </div>
+        </div>
+    </div>
+    <div class="checkbox well">
+        <label>
+            <input type="checkbox" ng-model="items[2].complete">
+            item 3 is complete
+        </label>
+    </div>
+    <div>there are {{items.length}}is {{items[0]}}{{ktime}}</div>
+    <div>
+        there are <span ng-bind="items.length"></span>items.
+    </div>
+    <div ng-bind-template="First:{{items[0].action}}. Second:{{items[1].action}}">
+
+    </div>
+    <div ng-non-bindable="">
+    AngularJS uses {{and}} characters for templates.
+    </div>
+    <div class="form-group well">
+        <label >set first item</label>
+        <input name="firstItem" class="form-control" ng-model="items[0].action"></input>
+    </div>
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Action</th>
+                <th>Done</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in items" ng-class="data.rowColor"
+            ng-mouseenter="handleEven($even)"
+            ng-mouseleave="handleEven($even)">
+            <td>{{$index+1}}</td>
+            <td>{{item.action}}</td>
+            <td ng-class="data.columncolor">{{item.complete}}</td>
+        </tr>
+            <tr ng-repeat="item in items " ng-class-even="settings.Rows" ng-class-odd="settings.Columns">
+                <td>{{item.action}}</td>
+                <td>{{item.complete}}</td>
+                <!--<td>-->
+                    <!--<span ng-if="item.complete">(incomplete)</span>-->
+                    <!--<span ng-if="item.complete">(done)</span>-->
+                <!--</td>-->
+                <!--<td>-->
+                    <!--<span ng-show="item.complete">(incomplete)</span>-->
+                    <!--<span ng-hide="item.complete">(done)</span>-->
+                <!--</td>-->
+                <!--<td ng-style="{'background-color':settings.Columns}">{{item.complete}}</td>-->
+                <!--<td><span ng-if="$first || $last">{{item.complete}}</span></td>-->
+            </tr>
+            <!--<tr ng-repeat-start="item in items">-->
+                <!--<td>{{item.action}}</td>-->
+            <!--</tr>-->
+            <!--<tr ng-repeat-end>-->
+                <!--<td>{{item.complete?'':"not"}}</td>-->
+            <!--</tr>-->
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
